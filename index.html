@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="uk"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Веб-форми HTML — інтерактив, 11 клас</title>
+<style>
+:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);--bg:#f6f7fb;--card:#fff;--tx:#1d2433;--mu:#5d6679;--ac:#3b5bdb;--ok:#2b8a3e;--bad:#c92a2a;--bd:#dde1ea;--code:#eef1f8;--okbg:#e6f6ea;--badbg:#fdeaea}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){color-scheme:dark;--bg:#14171f;--card:#1e222d;--tx:#e8ebf2;--mu:#9aa3b5;--ac:#7c93ff;--ok:#5fd37b;--bad:#ff7b7b;--bd:#323848;--code:#262b38;--okbg:#17301f;--badbg:#3a1f22}}
+:root[data-theme="dark"]{color-scheme:dark;--bg:#14171f;--card:#1e222d;--tx:#e8ebf2;--mu:#9aa3b5;--ac:#7c93ff;--ok:#5fd37b;--bad:#ff7b7b;--bd:#323848;--code:#262b38;--okbg:#17301f;--badbg:#3a1f22}
+*{box-sizing:border-box}html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--tx);font:16px/1.55 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+.w{max-width:820px;margin:0 auto;padding:16px}
+h1{font-size:1.5rem;margin:.2em 0}h2{margin:.2em 0 .6em;font-size:1.25rem}h3{margin:1.1em 0 .4em;font-size:1.05rem}
+.sub{color:var(--mu);margin:0 0 12px}
+nav{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px}
+nav button{flex:1;min-width:110px;padding:10px;border:1px solid var(--bd);background:var(--card);color:var(--tx);border-radius:10px;font:inherit;cursor:pointer}
+nav button.on{background:var(--ac);color:#fff;border-color:var(--ac)}
+.c{background:var(--card);border:1px solid var(--bd);border-radius:12px;padding:16px;margin-bottom:14px}
+.c.ok{border-color:var(--ok);background:var(--okbg)}.c.bad{border-color:var(--bad);background:var(--badbg)}.c.part{border-color:#e8a317}
+pre,code{background:var(--code);border-radius:6px;font:.9rem/1.5 ui-monospace,Consolas,monospace}
+code{padding:1px 5px}pre{padding:10px 12px;overflow-x:auto;margin:.5em 0;white-space:pre}
+.t{overflow-x:auto}table{border-collapse:collapse;width:100%;font-size:.93rem}td,th{border:1px solid var(--bd);padding:6px 9px;text-align:left}th{background:var(--code)}
+input[type=text],select,textarea{font:inherit;color:var(--tx);background:var(--bg);border:1px solid var(--bd);border-radius:6px;padding:5px 8px;max-width:100%}
+input.g{width:9em;font-family:ui-monospace,Consolas,monospace}
+.btn{background:var(--ac);color:#fff;border:0;border-radius:8px;padding:9px 16px;font:inherit;cursor:pointer;margin-top:8px}
+.btn:disabled{opacity:.5;cursor:default}.btn.s{background:var(--code);color:var(--tx);border:1px solid var(--bd)}
+.o{display:block;padding:3px 0}.r{display:flex;gap:8px;align-items:center;margin:6px 0;flex-wrap:wrap}
+.fb{margin-top:8px;font-size:.92rem;color:var(--mu)}.pt{float:right;font-size:.85rem;color:var(--mu)}
+.rq li{list-style:none;margin:2px 0}.rq{padding-left:4px}
+iframe{width:100%;height:210px;border:1px dashed var(--bd);border-radius:8px;background:#fff}
+textarea.cd{width:100%;height:210px;font:.88rem/1.45 ui-monospace,Consolas,monospace}
+.big{font-size:2.4rem;font-weight:700;color:var(--ac)}.bar{height:12px;background:var(--code);border-radius:6px;overflow:hidden}.bar i{display:block;height:100%;background:var(--ac)}
+.hide{display:none}
+</style></head><body><div class="w">
+<h1>Веб-форми в HTML</h1><p class="sub">Інтерактив для 11 класу · тренажер — 4 бали, тест — 8 балів, разом 12</p>
+<nav id="nav"><button data-t="th" class="on">Теорія</button><button data-t="tr">Тренажер</button><button data-t="ts">Тест</button><button data-t="gr">Оцінка</button></nav>
+
+<section id="th">
+<div class="c"><h2>0. Навіщо потрібні форми і як вони працюють</h2>
+<p>Форма — це спосіб, за допомогою якого користувач <b>передає дані</b> сайту: логін і пароль, замовлення, відгук, пошуковий запит, реєстрація на подію. Сама HTML-сторінка лише відображає поля; обробляє дані <b>сервер</b> (скрипт на PHP, Python, Node.js тощо).</p>
+<h3>Шлях даних</h3>
+<ol><li>Користувач заповнює поля й натискає кнопку <code>submit</code>.</li><li>Браузер перевіряє поля (наприклад, <code>required</code>, <code>type="email"</code>).</li><li>Браузер формує пари <b>name=value</b> для кожного поля, що має атрибут <code>name</code>, і надсилає їх на адресу з <code>action</code> методом з <code>method</code>.</li><li>Сервер приймає дані, обробляє їх і повертає нову сторінку-відповідь.</li></ol>
+<p>Приклад пар, що надійшли на сервер: <code>username=Ірина&amp;city=dnipro&amp;news=yes</code>. Поле <b>без name</b> на сервер <b>не потрапляє</b>.</p>
+<p>Основні елементи форми: контейнер <code>&lt;form&gt;</code>, поля введення (<code>&lt;input&gt;</code>, <code>&lt;textarea&gt;</code>, <code>&lt;select&gt;</code>), підписи <code>&lt;label&gt;</code> і кнопки.</p></div>
+<div class="c"><h2>1. Контейнер &lt;form&gt;</h2>
+<p>Усі поля огортаються парним тегом <code>&lt;form&gt; … &lt;/form&gt;</code>. Він об’єднує поля в єдиний блок для відправлення даних на сервер.</p>
+<pre>&lt;form action="#" method="post"&gt; … &lt;/form&gt;</pre>
+<p><code>action</code> — URL обробника (під час верстки ставлять заглушку <code>#</code>). <code>method</code> — спосіб передачі: <b>GET</b> — через адресний рядок, <b>POST</b> — у тілі запиту (паролі, великі обсяги).</p>
+<h3>GET чи POST?</h3>
+<div class="t"><table><tr><th></th><th>GET</th><th>POST</th></tr>
+<tr><td>Де передаються дані</td><td>В адресному рядку: <code>сторінка?name=value&amp;…</code></td><td>У тілі запиту, не видно в адресі</td></tr>
+<tr><td>Обсяг</td><td>Обмежений довжиною адреси</td><td>Практично необмежений</td></tr>
+<tr><td>Закладка / посилання</td><td>Можна зберегти й поділитися</td><td>Не можна</td></tr>
+<tr><td>Коли використовувати</td><td>Пошук, фільтри — безпечні запити</td><td>Паролі, реєстрація, замовлення, файли</td></tr></table></div>
+<p>Якщо <code>method</code> не вказано, браузер використає <b>GET</b>. Інші корисні атрибути: <code>target="_blank"</code> (відповідь у новій вкладці), <code>autocomplete="off"</code> (вимкнути підказки браузера), <code>novalidate</code> (вимкнути перевірку браузера).</p>
+<p><b>Важливо:</b> форми не можна вкладати одна в одну, але на сторінці може бути кілька окремих форм.</p></div>
+
+<div class="c"><h2>2. Елемент &lt;input&gt;</h2>
+<p>Одинарний тег — «хамелеон» форм: вигляд і поведінка залежать від атрибута <code>type</code>.</p>
+<div class="t"><table><tr><th>type</th><th>Призначення</th><th>Особливості</th></tr>
+<tr><td>text</td><td>Однорядкове поле</td><td>Ім’я, місто, логін</td></tr>
+<tr><td>password</td><td>Пароль</td><td>Приховує символи</td></tr>
+<tr><td>email</td><td>Е-пошта</td><td>Перевіряє наявність @</td></tr>
+<tr><td>number</td><td>Число</td><td>Лише цифри; атрибути min, max</td></tr>
+<tr><td>date</td><td>Вибір дати</td><td>Вбудований календар</td></tr>
+<tr><td>radio</td><td>Радіокнопка</td><td>Один варіант з групи (однаковий name)</td></tr>
+<tr><td>checkbox</td><td>Прапорець</td><td>Кілька варіантів одночасно</td></tr>
+<tr><td>submit</td><td>Відправлення</td><td>Надсилає дані на сервер</td></tr>
+<tr><td>reset</td><td>Очищення</td><td>Скидає введене</td></tr></table></div>
+<h3>Корисні атрибути</h3>
+<p><code>name</code> — системне ім’я поля (латиницею), за яким сервер розпізнає дані. <code>placeholder</code> — сіра підказка в порожньому полі. <code>required</code> — поле обов’язкове.</p>
+<h3>Додаткові атрибути полів</h3>
+<div class="t"><table><tr><th>Атрибут</th><th>Що робить</th><th>Приклад</th></tr>
+<tr><td>value</td><td>Початкове значення (для кнопок — напис; для radio/checkbox — значення, що піде на сервер)</td><td><code>value="Надіслати"</code></td></tr>
+<tr><td>min, max, step</td><td>Межі й крок для number та date</td><td><code>min="14" max="99"</code></td></tr>
+<tr><td>maxlength</td><td>Максимальна кількість символів</td><td><code>maxlength="20"</code></td></tr>
+<tr><td>checked</td><td>Радіокнопка або прапорець обрані від початку</td><td><code>checked</code></td></tr>
+<tr><td>readonly</td><td>Поле видно, змінювати не можна (дані надсилаються)</td><td><code>readonly</code></td></tr>
+<tr><td>disabled</td><td>Поле неактивне (дані <b>не</b> надсилаються)</td><td><code>disabled</code></td></tr>
+<tr><td>autofocus</td><td>Курсор у полі одразу після завантаження</td><td><code>autofocus</code></td></tr></table></div>
+<h3>Радіокнопки й прапорці</h3>
+<pre>Розмір:
+&lt;input type="radio" name="size" value="s"&gt; S
+&lt;input type="radio" name="size" value="m" checked&gt; M
+
+&lt;input type="checkbox" name="news" value="yes"&gt; Отримувати новини</pre>
+<p>Радіокнопки об’єднуються в групу однаковим <code>name</code> — обрати можна лише одну. Прапорець, який не відмічено, на сервер <b>не надсилається</b>. Кнопки: <code>type="submit" value="Надіслати"</code> і <code>type="reset" value="Очистити"</code>.</p></div>
+
+<div class="c"><h2>3. Підписи — &lt;label&gt;</h2>
+<p>Зв’язує підпис і поле: клік по тексту ставить курсор у поле (зручно для чекбоксів і радіокнопок на телефоні). Зв’язок — значення <code>for</code> дорівнює <code>id</code> поля.</p>
+<pre>&lt;label for="user-name"&gt;Ваше ім’я:&lt;/label&gt;
+&lt;input type="text" id="user-name" name="username" placeholder="Введіть ім’я"&gt;</pre>
+<p>Навіщо це потрібно: зручність (більша клікабельна область), доступність (екранні читалки озвучують підпис разом із полем), порядок у коді.</p>
+<h3>Другий спосіб — вкласти поле всередину label</h3>
+<pre>&lt;label&gt;&lt;input type="checkbox" name="news" value="yes"&gt; Отримувати новини&lt;/label&gt;</pre>
+<p>Тоді <code>for</code> та <code>id</code> не потрібні. Підпис не слід плутати з <code>placeholder</code>: підказка зникає, щойно користувач почне вводити текст, тому вона <b>не замінює</b> label. Значення <code>id</code> має бути унікальним на сторінці, а <code>name</code> може повторюватися (як у радіокнопок).</p></div>
+
+<div class="c"><h2>4. Багаторядковий текст — &lt;textarea&gt;</h2>
+<p>Парний тег для відгуків і коментарів. Атрибути: <code>rows</code> (висота в рядках), <code>cols</code> (ширина в символах), <code>placeholder</code>.</p>
+<pre>&lt;textarea id="comment" name="user_comment" rows="4" cols="35"&gt;&lt;/textarea&gt;</pre>
+<p>Текст між відкриваючим і закриваючим тегами стає початковим значенням поля (у <code>&lt;textarea&gt;</code> немає атрибута <code>value</code>). Корисні атрибути: <code>maxlength</code> — обмеження довжини, <code>required</code>, <code>readonly</code>. Розмір <code>rows</code> і <code>cols</code> можна замінити стилями CSS. Пробіли й переноси рядків усередині тегу зберігаються, тому не ставте зайвих відступів між тегами.</p></div>
+
+<div class="c"><h2>5. Розкривні списки — &lt;select&gt; і &lt;option&gt;</h2>
+<p>Коли варіантів багато, використовують <code>&lt;select&gt;</code>; кожен пункт — тег <code>&lt;option&gt;</code>.</p>
+<pre>&lt;select id="city" name="user_city"&gt;
+  &lt;option value="kyiv"&gt;Київ&lt;/option&gt;
+  &lt;option value="dnipro"&gt;Дніпро&lt;/option&gt;
+&lt;/select&gt;</pre>
+<h3>Атрибути списку</h3>
+<div class="t"><table><tr><th>Атрибут</th><th>Призначення</th></tr>
+<tr><td><code>value</code> в option</td><td>Значення, яке піде на сервер (текст між тегами бачить лише користувач)</td></tr>
+<tr><td><code>selected</code> в option</td><td>Пункт обрано за замовчуванням</td></tr>
+<tr><td><code>disabled</code> в option</td><td>Пункт показано, але обрати не можна (наприклад, «Оберіть місто»)</td></tr>
+<tr><td><code>multiple</code> в select</td><td>Можна обрати кілька пунктів (Ctrl/Shift)</td></tr>
+<tr><td><code>size</code> в select</td><td>Скільки пунктів видно одночасно (список замість розкривного меню)</td></tr></table></div>
+<p>Якщо <code>value</code> не вказано, на сервер піде текст пункту. Групувати пункти можна тегом <code>&lt;optgroup label="Назва групи"&gt;</code>.</p></div>
+
+<div class="c"><h2>6. Спробуйте самі: робоча форма</h2>
+<p>Заповніть форму й натисніть «Надіслати» — під нею з’явиться те, що браузер надіслав би серверу (пари <b>name=value</b>). Зверніть увагу: поле «Ім’я» обов’язкове, а прапорець без позначки в результаті відсутній.</p>
+<form action="#" method="get" onsubmit="event.preventDefault();this.nextElementSibling.textContent='Було б надіслано: ?'+new URLSearchParams(new FormData(this))">
+<p><label for="d-n">Ім’я:</label> <input type="text" id="d-n" name="username" placeholder="Введіть ім’я" required></p>
+<p><label for="d-e">Пошта:</label> <input type="email" id="d-e" name="email"></p>
+<p><label for="d-a">Вік:</label> <input type="number" id="d-a" name="age" min="14" max="99"></p>
+<p>Статус: <label><input type="radio" name="st" value="school" checked> школяр</label> <label><input type="radio" name="st" value="student"> студент</label></p>
+<p><label><input type="checkbox" name="news" value="yes"> Отримувати новини</label></p>
+<p><label for="d-c">Місто:</label> <select id="d-c" name="city"><option value="kyiv">Київ</option><option value="lviv">Львів</option><option value="dnipro">Дніпро</option></select></p>
+<p><label for="d-m">Коментар:</label><br><textarea id="d-m" name="comment" rows="3" cols="30" placeholder="Напишіть повідомлення..."></textarea></p>
+<p><input type="submit" value="Надіслати"> <input type="reset" value="Очистити"></p></form><p class="fb"></p></div>
+
+<div class="c"><h2>Підсумок і типові помилки</h2>
+<ul><li>Усі поля — всередині <code>&lt;form&gt;</code> з <code>action</code> і <code>method</code>.</li><li>Без атрибута <code>name</code> дані поля не передаються.</li><li>Для radio в групі <code>name</code> однакове, <code>id</code> завжди унікальний.</li><li><code>label for</code> має дорівнювати <code>id</code> поля.</li><li>Пункти списку — лише <code>&lt;option&gt;</code> всередині <code>&lt;select&gt;</code>.</li><li>Паролі передаємо методом POST і з <code>type="password"</code>.</li><li><code>&lt;input&gt;</code> — одинарний тег; <code>&lt;form&gt;</code>, <code>&lt;label&gt;</code>, <code>&lt;textarea&gt;</code>, <code>&lt;select&gt;</code> — парні.</li></ul>
+<button class="btn" onclick="go('tr')">До тренажера →</button></div>
+</section>
+
+<section id="tr" class="hide"><div id="trc"></div></section>
+<section id="ts" class="hide"><div id="tsc"></div><button class="btn" id="tsb">Завершити тест</button> <span id="tsm" class="fb"></span></section>
+<section id="gr" class="hide"><div id="grc"></div></section>
+
+<script>
+const $=(s,r=document)=>r.querySelector(s),$$=(s,r=document)=>[...r.querySelectorAll(s)];
+const E=s=>String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+const N=s=>s.trim().toLowerCase().replace(/\s+/g,'');
+const S={tr:[null,null,null,null],ts:null,qs:[]};
+function go(id){$$('section').forEach(s=>s.classList.toggle('hide',s.id!=id));$$('#nav button').forEach(b=>b.classList.toggle('on',b.dataset.t==id));if(id=='gr')grade();scrollTo(0,0)}
+$$('#nav button').forEach(b=>b.onclick=()=>go(b.dataset.t));
+
+/* ---------- ТРЕНАЖЕР (4 × 1 бал) ---------- */
+const types=['text','password','email','number','date','radio','checkbox','submit','reset'];
+const T2=[['Поле для введення пароля','password'],['Вибір дати з календарем','date'],['Вибір кількох варіантів одночасно','checkbox'],['Кнопка відправлення форми','submit']];
+const gi=(a,w=7)=>`<input type="text" class="g" data-a="${a}" size="${w}" autocomplete="off">`;
+const tasks=[
+{h:'Завдання 1. Заповніть пропуски у коді',b:()=>`<pre>&lt;form ${gi('action')}="#" ${gi('method')}="post"&gt;
+  &lt;input type="text" name="login"&gt;
+&lt;/${gi('form')}&gt;</pre><p class="fb">Підказка: адреса обробника, спосіб передачі, закриваючий тег.</p>`,
+ ok:c=>$$('.g',c).every(i=>N(i.value)==i.dataset.a),fb:'Правильно: action, method, form.'},
+{h:'Завдання 2. Оберіть type для кожного призначення',b:()=>T2.map((t,i)=>`<div class="r"><span style="min-width:15em">${t[0]}</span><select data-a="${t[1]}"><option value="">—</option>${types.map(x=>`<option>${x}</option>`).join('')}</select></div>`).join(''),
+ ok:c=>$$('select',c).every(s=>s.value==s.dataset.a),fb:'Правильно: password, date, checkbox, submit.'},
+{h:'Завдання 3. Зв’яжіть підпис і поле',b:()=>`<pre>&lt;label for="${gi('user-mail',9)}"&gt;Пошта:&lt;/label&gt;
+&lt;input type="email" id="user-mail" name="mail"&gt;
+&lt;input type="radio" ${gi('name',5)}="size" value="s"&gt; S
+&lt;input type="radio" name="size" value="m"&gt; M</pre><p class="fb">Підказка: перший пропуск — значення, що збігається з id поля; другий — атрибут, який об’єднує радіокнопки в групу.</p>`,
+ ok:c=>{const g=$$('.g',c);return N(g[0].value)=='user-mail'&&N(g[1].value)=='name'},fb:'Правильно: for="user-mail"; name="size" об’єднує радіокнопки.'},
+{h:'Завдання 4. Знайдіть і виправте помилки у формі',b:()=>`<p>У коді форми є 5 помилок. Виправте їх у редакторі: кожен пункт контрольного списку під ним має бути позначений ☑ (позначається автоматично). Попередній перегляд допоможе помітити, що працює не так.</p><textarea class="cd" id="ed" spellcheck="false">&lt;form action="#" method="post"&gt;
+  &lt;label for="mail"&gt;Пошта:&lt;/label&gt;
+  &lt;input type="email" id="email" name="mail"&gt;
+  &lt;input type="radio" name="size" value="s"&gt; S
+  &lt;input type="radio" name="sz" value="m"&gt; M
+  &lt;select name="city"&gt;
+    &lt;input value="kyiv"&gt;Київ&lt;/input&gt;
+    &lt;input value="lviv"&gt;Львів&lt;/input&gt;
+  &lt;/select&gt;
+  &lt;textarea name="msg" /&gt;
+  &lt;input type="submit" value="Надіслати"&gt;</textarea><iframe sandbox id="pv" title="Попередній перегляд"></iframe><ul class="rq" id="rq"></ul>`,
+ ok:()=>reqs().every(r=>r[1]),fb:'Усі помилки виправлено.',init:c=>{const ed=$('#ed',c);ed.value=ed.value.replace(/&lt;/g,'<').replace(/&gt;/g,'>');const u=()=>{$('#pv').srcdoc=ed.value;$('#rq').innerHTML='<li><b>Контрольний список:</b></li>'+reqs().map(r=>`<li><label class="o"><input type="checkbox" style="accent-color:var(--ok)" onclick="return false" ${r[1]?'checked':''}> ${E(r[0])}</label></li>`).join('')+`<li class="fb">Виправлено: ${reqs().filter(r=>r[1]).length} з 5</li>`};ed.oninput=u;u()}}
+];
+function reqs(){const v=$('#ed').value,d=new DOMParser().parseFromString(v,'text/html'),sel=(v.match(/<select[\s\S]*?<\/select>/i)||[''])[0],rd=[...d.querySelectorAll('input[type=radio]')];return[
+['Підпис <label for> збігається з id поля',[...d.querySelectorAll('label[for]')].some(l=>{const f=d.getElementById(l.htmlFor);return f&&f.type=='email'})],
+['Радіокнопки size/sz об’єднано в одну групу (однакове name)',rd.length>1&&rd.every(r=>r.name&&r.name==rd[0].name)],
+['Пункти списку — теги <option>, усередині <select> немає <input>',/<\/select>/i.test(v)&&!/<input/i.test(sel)&&(sel.match(/<option/gi)||[]).length>1],
+['<textarea> правильно закрито (парний тег), кнопка submit лежить поза ним',/<textarea[^>]*>[\s\S]*?<\/textarea>/i.test(v)&&!!d.querySelector('input[type=submit]')&&!d.querySelector('textarea input')],
+['Форму закрито тегом </form>',/<\/form>\s*$/i.test(v.trim())]]}
+function renderTr(){$('#trc').innerHTML='<p class="fb">Кожне завдання — 1 бал, перевірка одноразова.</p>'+tasks.map((t,i)=>`<div class="c" id="t${i}"><span class="pt">1 бал</span><h2>${t.h}</h2>${t.b()}<button class="btn" data-i="${i}">Перевірити</button><div class="fb"></div></div>`).join('');
+tasks.forEach((t,i)=>t.init&&t.init($('#t'+i)));
+$$('#trc .btn').forEach(b=>b.onclick=()=>{const i=+b.dataset.i,c=$('#t'+i),ok=tasks[i].ok(c);S.tr[i]=ok?1:0;c.classList.add(ok?'ok':'bad');b.disabled=true;$$('input,select,textarea',c).forEach(x=>x.disabled=true);$('.fb',c).textContent=ok?'✅ Зараховано. '+tasks[i].fb:'❌ Не зараховано. '+tasks[i].fb;
+if(S.tr.every(x=>x!==null))$('#trc').insertAdjacentHTML('beforeend',`<p><b>Тренажер завершено: ${S.tr.reduce((a,b)=>a+b,0)} з 4 балів.</b> <button class="btn" onclick="go('ts')">До тесту →</button></p>`)})}
+
+/* ---------- ТЕСТ (10 завдань, 8 балів) ---------- */
+const Q=[
+{t:'single',p:.5,q:'Який тег об’єднує всі поля в єдиний блок для відправлення на сервер?',o:['<div>','<input>','<form>','<label>'],a:2,h:'Усі поля огортає парний тег <form>.'},
+{t:'single',p:.5,q:'Який метод варто використати для передачі пароля?',o:['get','post','put','send'],a:1,h:'POST передає дані приховано, у тілі запиту.'},
+{t:'single',p:.5,q:'Яке значення type відкриває вбудований календар?',o:['calendar','time','date','number'],a:2,h:'type="date".'},
+{t:'single',p:.5,q:'Який атрибут робить поле обов’язковим для заповнення?',o:['placeholder','required','name','value'],a:1,h:'Атрибут required.'},
+{t:'multi',p:1,q:'Оберіть усі ПАРНІ теги (з закриваючим тегом):',o:['<form>','<input>','<textarea>','<label>','<select>'],a:[0,2,3,4],h:'<input> — одинарний тег; решта парні.'},
+{t:'tf',p:1,q:'Визначте, чи правильне твердження:',items:[['GET передає дані через адресний рядок браузера.',true],['Радіокнопки з однаковим name дозволяють обрати кілька варіантів.',false],['placeholder показує підказку в порожньому полі.',true],['<textarea> — одинарний тег.',false]],h:'Радіокнопки групи дозволяють лише один вибір; textarea — парний тег.'},
+{t:'fill',p:1,q:'Атрибут for тега <label> має збігатися зі значенням атрибута … елемента <input>.',a:['id'],h:'for = id.'},
+{t:'match',p:1,q:'Поєднайте type з його особливістю:',pairs:[['password','Приховує символи'],['email','Перевіряє наявність @'],['number','Лише цифри, атрибути min і max'],['reset','Скидає введені дані']],h:'Див. таблицю в теорії.'},
+{t:'order',p:1,q:'Розташуйте рядки коду у правильному порядку (1–4):',lines:['<form action="#" method="post">','<label for="n">Ім’я:</label>','<input type="text" id="n" name="n">','</form>'],perm:[2,0,3,1],h:'form → label → input → /form.'},
+{t:'single',p:1,q:'Знайдіть помилку:\n<select id="city" name="city">\n  <input value="kyiv">Київ</input>\n</select>',o:['Не можна задавати id для select','Пункти списку мають бути в тегах <option>','Відсутній тег <form>','name вказують лише в input'],a:1,h:'Пункти розкривного списку — теги <option>.'}];
+const frac=(q,i)=>{const g=j=>$(`#q${i}_${j}`);
+ if(q.t=='single'){const c=$(`input[name=q${i}]:checked`);return c&&+c.value==q.a?1:0}
+ if(q.t=='multi')return $$(`input[name=q${i}]:checked`).map(x=>+x.value).sort().join()==q.a.join()?1:0;
+ if(q.t=='tf')return q.items.filter((it,j)=>g(j).value==String(it[1])).length/q.items.length;
+ if(q.t=='fill')return q.a.includes(N(g(0).value))?1:0;
+ if(q.t=='match')return q.pairs.filter((p,j)=>g(j).value==p[1]).length/q.pairs.length;
+ if(q.t=='order')return q.lines.filter((l,j)=>g(j).value==j+1).length/q.lines.length}
+function renderTs(){const rs=[...new Set(Q[7].pairs.map(p=>p[1]))].sort((a,b)=>b.length-a.length);
+$('#tsc').innerHTML=Q.map((q,i)=>{let b='';
+ if(q.t=='single')b=q.o.map((o,j)=>`<label class="o"><input type="radio" name="q${i}" value="${j}"> ${E(o)}</label>`).join('');
+ if(q.t=='multi')b='<p class="fb">Можливо кілька відповідей.</p>'+q.o.map((o,j)=>`<label class="o"><input type="checkbox" name="q${i}" value="${j}"> ${E(o)}</label>`).join('');
+ if(q.t=='tf')b=q.items.map((it,j)=>`<div class="r"><select id="q${i}_${j}"><option value="">—</option><option value="true">Правда</option><option value="false">Хиба</option></select><span>${E(it[0])}</span></div>`).join('');
+ if(q.t=='fill')b=`<input type="text" class="g" id="q${i}_0" autocomplete="off">`;
+ if(q.t=='match')b=q.pairs.map((p,j)=>`<div class="r"><code>${E(p[0])}</code><select id="q${i}_${j}"><option value="">—</option>${rs.map(r=>`<option>${E(r)}</option>`).join('')}</select></div>`).join('');
+ if(q.t=='order')b=q.perm.map(k=>`<div class="r"><select id="q${i}_${k}"><option value="">№</option>${[1,2,3,4].map(n=>`<option>${n}</option>`).join('')}</select><code>${E(q.lines[k])}</code></div>`).join('');
+ const qt=q.q.split('\n'),code=qt.length>1?`<pre>${E(qt.slice(1).join('\n'))}</pre>`:'';
+ return `<div class="c" id="qc${i}"><span class="pt">${q.p} б.</span><b>${i+1}. ${E(qt[0])}</b>${code}${b}<div class="fb"></div></div>`}).join('')}
+$('#tsb').onclick=()=>{if(S.ts!==null)return;let sum=0;
+ Q.forEach((q,i)=>{const f=frac(q,i),p=Math.round(f*q.p*100)/100;sum+=p;const c=$('#qc'+i);c.classList.add(f==1?'ok':f>0?'part':'bad');$$('input,select',c).forEach(x=>x.disabled=true);$('.fb',c).textContent=`${f==1?'✅':f>0?'🟡':'❌'} ${p} з ${q.p} б.${f<1?' '+q.h:''}`});
+ S.ts=Math.round(sum*100)/100;$('#tsb').disabled=true;$('#tsm').innerHTML=`Результат тесту: <b>${S.ts} з 8</b> `;$('#tsm').insertAdjacentHTML('beforeend','<button class="btn s" onclick="go(\'gr\')">Подивитись оцінку →</button>')};
+
+/* ---------- ОЦІНКА ---------- */
+function grade(){const a=S.tr.reduce((x,y)=>x+(y||0),0),b=S.ts||0,t=Math.round((a+b)*100)/100,g=Math.round(t),done=S.ts!==null&&S.tr.every(x=>x!==null);
+const lv=g>=10?'Високий рівень — чудово володієте формами!':g>=7?'Достатній рівень — добре, повторіть слабкі місця.':g>=4?'Середній рівень — перегляньте теорію та спробуйте ще раз.':'Початковий рівень — повторіть теорію й пройдіть тренажер знову.';
+$('#grc').innerHTML=`<div class="c"><h2>Підсумок</h2>${done?'':'<p class="fb">Ще не все пройдено: бали за непройдені розділи — 0.</p>'}
+<div class="t"><table><tr><th>Розділ</th><th>Бали</th><th>Максимум</th></tr><tr><td>Тренажер</td><td>${a}</td><td>4</td></tr><tr><td>Тест</td><td>${b}</td><td>8</td></tr><tr><th>Разом</th><th>${t}</th><th>12</th></tr></table></div>
+<p style="margin-bottom:2px">Оцінка за 12-бальною шкалою</p><div class="big">${g} / 12</div><div class="bar"><i style="width:${t/12*100}%"></i></div><p>${lv}</p>
+<label>Ім’я учня: <input type="text" id="nm" placeholder="Прізвище та ім’я"></label><br><button class="btn" onclick="resetAll()">Пройти знову</button></div>`}
+function resetAll(){S.tr=[null,null,null,null];S.ts=null;renderTr();renderTs();$('#tsb').disabled=false;$('#tsm').textContent='';go('th')}
+renderTr();renderTs();
+</script></div></body></html>
